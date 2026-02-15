@@ -1,0 +1,21 @@
+{
+  "name": "interview-platform",
+  "version": "1.0.0",
+  "description": "\"# ip\"",
+  "main": "index.js",
+  "scripts": {
+   "build":"npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/outgoingrudra/ip.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/outgoingrudra/ip/issues"
+  },
+  "homepage": "https://github.com/outgoingrudra/ip#readme"
+}
