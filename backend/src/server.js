@@ -10,6 +10,12 @@ app.get("/book",(req,res)=>{
     res.send("Book")
 })
 
+
+app.get("/files",(req,res)=>{
+    res.send("files")
+})
+
+
 if(ENV.NODE_ENV ==="production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")))
     app.get("/{*any}",(req,res)=>{
