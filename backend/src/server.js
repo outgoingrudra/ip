@@ -6,11 +6,9 @@ import path from "path"
 const app = express()
 
 const __dirname = path.resolve()
-
-app.get("/",(req,res)=>{
-    res.status(200).json({msg:"Success from Api"})
+app.get("/book",(req,res)=>{
+    res.send("Book")
 })
-
 
 if(ENV.NODE_ENV ==="production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")))
@@ -18,5 +16,6 @@ if(ENV.NODE_ENV ==="production"){
         res.sendFile(path.join(__dirname,"../frontend","dist","index.html"))
     })
 }
+// time -> 41.29
 
 app.listen(ENV.PORT,()=>{console.log("Server is running on port "+ENV.PORT)})
