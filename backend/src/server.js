@@ -2,9 +2,13 @@ import express from "express"
 import { ENV } from "./lib/env.js";
 import path from "path"
 import { ConnectDB } from "./lib/db.js";
+import cors from "cors"
 
 
 const app = express()
+app.use(cors({origin : ENV.CLIENT_URL, credentials : true}))
+app.use(express.json())
+
 
 const __dirname = path.resolve()
 app.get("/book",(req,res)=>{
