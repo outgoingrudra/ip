@@ -5,23 +5,24 @@ import { ConnectDB } from "./lib/db.js";
 import cors from "cors"
 import {serve} from "inngest/express"
 import {inngest,functions} from "./lib/inngest.js"
-
+import {clerkMiddleware} from "@clerk/express"
+import chatRoutes from "./routes/chatRoutes.js"
 
 const app = express()
 app.use(cors({origin : ENV.CLIENT_URL, credentials : true}))
 app.use(express.json())
+app.use(clerkMiddleware())
 app.use("/api/inngest",serve({client :inngest , functions }))
 
 
 const __dirname = path.resolve()
 app.get("/book",(req,res)=>{
+    console.log(req.auth);
+    
     res.send("Book")
 })
 
-
-app.get("/files",(req,res)=>{
-    res.send("files")
-})
+app.use("/api/chat",chatRoutes)
 
 
 if(ENV.NODE_ENV ==="production"){
