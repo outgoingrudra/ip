@@ -84,7 +84,7 @@ export async function getSessionById(req,res){
     try {
         const {id} = req.params
 
-        const session = Session.findById(id)
+        const session =await  Session.findById(id)
         .populate("host","name email profileImage clerkId")
         .populate("participant","name email profileImage clerkId")
 
