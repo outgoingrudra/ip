@@ -8,6 +8,8 @@ export async function createSession(req,res){
         const userId = req.user._id
         const clerkId = req.user.clerkId
 
+        console.log("req came here ->")
+
         if(!problem || !difficulty) {
             return res.status(400).json({ message : "Problem and difficulty are required "})
         }
@@ -18,6 +20,7 @@ export async function createSession(req,res){
         const session = new Session({
             problem , difficulty , host : userId , callId
         })
+        await session.save()
 
         // create stream video call
         await streamClient.video.call("default",callId).getOrCreate({
@@ -33,6 +36,7 @@ export async function createSession(req,res){
             created_by_id : clerkId,
             members : [clerkId]
         })
+        
         await channel.create()
         res.status(201).json({session})
 
@@ -49,7 +53,10 @@ export async function createSession(req,res){
 
 export async function getActiveSessions(_,res){
     try {
-        const sessions = await Session.find({status : "active"}).populate("host","name profileImage email clerkId").sort({createdAt : -1}).limit(20)
+        const sessions = await Session.find({status : "active"})
+        .populate("host","name profileImage email clerkId").sort({createdAt : -1})
+        .populate("participant","name profileImage email clerkId").sort({createdAt : -1})
+        .limit(20)
 
         res.status(200).json({sessions})
         
